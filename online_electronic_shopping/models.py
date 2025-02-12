@@ -5,14 +5,25 @@ from django.utils import timezone
 class Categories(models.Model):
     name= models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Brand(models.Model):
     name= models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 
 
 class Color(models.Model):
     name= models.CharField(max_length=200)
     code= models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
 
 class Filter_Price(models.Model):
     FILTER_PRICE=(
@@ -23,6 +34,10 @@ class Filter_Price(models.Model):
         ('100000 TO 200000','100000 TO 200000'),
     )
     price= models.CharField(choices=FILTER_PRICE, max_length=60)
+
+    def __str__(self):
+        return self.price
+
 
 class Product(models.Model):
     CONDITION= (('New', 'New'),('Old','Old'))
@@ -50,3 +65,18 @@ class Product(models.Model):
             self.unique_id= self.created_date.strftime('75%Y%m%d23') + str(self.id)
 
         return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Images(models.Model):
+    image= models.ImageField(upload_to='Product_image/img')
+    product= models.ForeignKey(Product,on_delete=models.CASCADE)
+
+
+
+
+class Tag(models.Model):
+    name= models.CharField(max_length=200)
+    product= models.ForeignKey(Product,on_delete=models.CASCADE)
