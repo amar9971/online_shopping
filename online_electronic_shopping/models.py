@@ -47,7 +47,7 @@ class Product(models.Model):
     unique_id = models.CharField(unique=True, max_length=200, null=True,blank=True)
     image = models.ImageField(upload_to='Product_image/img')
     name= models.CharField(max_length=200)
-    price= models.ImageField()
+    price= models.IntegerField()
     condition= models.CharField(choices=CONDITION,max_length=100)
     information= models.TextField()
     discription = models.TextField()
