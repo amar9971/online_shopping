@@ -23,10 +23,19 @@ def PRODUCT(request):
     color = Color.objects.all()
     brand= Brand.objects.all()
 
+
     CATID = request.GET.get('categories')
     PRICE_FILTER_ID= request.GET.get('filter_Price')
     COLOR_ID= request.GET.get('Color')
     BRAND_ID= request.GET.get('brand')
+
+    ATOZID= request.GET.get('ATOZ')
+    ZTOAID = request.GET.get('ZTOA')
+    PRICE_LOWTOHIGH= request.GET.get('PRICE_LOWTOHIGH')
+    PRICE_HIGHTOLOW= request.GET.get('PRICE_HIGHTOLOW')
+
+    NEW_PRODUCT= request.GET.get('NEW_PRODUCT')
+    OLD_PRODUCT= request.GET.get('OLD_PRODUCT')
 
     if CATID:
         product= Product.objects.filter(Categories=CATID,status='Publish')
@@ -39,8 +48,26 @@ def PRODUCT(request):
     elif BRAND_ID:
         product=Product.objects.filter(Brand='BRAND_ID',status='Publish')
 
+    elif ATOZID:
+        product= Product.objects.filter(status='Publish').order_by('name')
+
+    elif ZTOAID:
+        product = Product.objects.filter(status='Publish').order_by('-name')
+
+    elif PRICE_LOWTOHIGH:
+        product = Product.objects.filter(status='Publish').order_by('price')
+
+    elif PRICE_HIGHTOLOW:
+        product = Product.objects.filter(status='Publish').order_by('-price')
+
+    elif NEW_PRODUCT:
+        product = Product.objects.filter(status='Publish', condition='New').order_by('-id')
+
+    elif OLD_PRODUCT:
+        product = Product.objects.filter(status='Publish', condition='Old').order_by('-id')
+
     else:
-        product= Product.objects.filter(status='Publish')
+        product= Product.objects.filter(status='Publish').order_by('-id')
 
     cantext = {
         'product': product,
@@ -51,3 +78,8 @@ def PRODUCT(request):
 
     }
     return render(request,'main/product.html',cantext)
+
+
+def SEARCH(request):
+
+    return render(request,"main/search.html")
