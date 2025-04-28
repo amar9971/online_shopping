@@ -81,5 +81,12 @@ def PRODUCT(request):
 
 
 def SEARCH(request):
+    query= request.GET.get('query')
+    product=Product.objects.filter(name__icontains=query)
 
-    return render(request,"main/search.html")
+    context = {
+       'product':product,
+    }
+
+
+    return render(request,"main/search.html",context)
