@@ -260,7 +260,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{% url 'contact_us' %}">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -483,7 +483,7 @@
                                 <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>
                             </ul>
                         </li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- OffCanvas Menu End -->
@@ -680,7 +680,7 @@
                                     </div>
                                     <span class="read-review"><a class="reviews" href="#">( 2 Review )</a></span>
                                 </div>
-                                <p class="mt-30px">{{ i.discription |truncatewords:50 }}</p>
+                                <p class="mt-30px">{{ i.discription |truncatewords:50| safe}}</p>
                                 <div class="pro-details-categories-info pro-details-same-style d-flex m-0">
                                     <span>SKU:</span>
                                     <ul class="d-flex">

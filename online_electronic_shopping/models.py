@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Categories(models.Model):
@@ -49,8 +50,8 @@ class Product(models.Model):
     name= models.CharField(max_length=200)
     price= models.IntegerField()
     condition= models.CharField(choices=CONDITION,max_length=100)
-    information= models.TextField()
-    discription = models.TextField()
+    information= RichTextField(null=True)
+    discription = RichTextField(null=True)
     stock= models.CharField(choices=STOCK, max_length=200)
     status= models.CharField(choices=STATUS, max_length=100)
     created_date= models.DateTimeField(default=timezone.now)
@@ -80,3 +81,13 @@ class Images(models.Model):
 class Tag(models.Model):
     name= models.CharField(max_length=200)
     product= models.ForeignKey(Product,on_delete=models.CASCADE)
+
+class contant_us(models.Model):
+    name = models.CharField(max_length=200)
+    email= models.EmailField(max_length=200)
+    subject= models.CharField(max_length=300)
+    massege= models.TextField()
+    date= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

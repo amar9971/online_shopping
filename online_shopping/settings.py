@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'online_electronic_shopping',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,14 @@ STATIC_ROOT = '/static'
 STATICFILES_DIRS= [
     os.path.join(BASE_DIR,'static')
 ]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '######'
+EMAIL_HOST_PASSWORD = '#######'
+
+
 
 
 # Default primary key field type

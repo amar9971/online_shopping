@@ -122,14 +122,14 @@
                                         <span class="new">{{ prod.condition }}</span>
                                     </span>
                                     <div class="thumb">
-                                        <a href="single-product.html" class="image">
+                                        <a href="/product_details/{{ prod.id }}" class="image">
                                             <img src="{{ prod.image }}" alt="Product" />
                                             <img class="hover-image" src="{{ prod.image }}" alt="Product" />
                                         </a>
                                     </div>
                                     <div class="content">
-                                        <span class="category"><a href="#">{{ prod.Categories }}</a></span>
-                                        <h5 class="title"><a href="single-product.html">{{ prod.name }}
+                                        <span class="category"><a href="/product_details/{{ prod.id }}">{{ prod.Categories }}</a></span>
+                                        <h5 class="title"><a href="/product_details/{{ prod.id }}">{{ prod.name }}
                                             </a>
                                         </h5>
                                         <span class="price">
