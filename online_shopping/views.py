@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from online_electronic_shopping.models import Product, Categories, Filter_Price, Color, Brand, contant_us
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
+from cart.cart import Cart
 
 
 def BASE(request):
@@ -127,3 +131,98 @@ def CONTACT_US(request):
             return redirect('contact_us')
 
     return render(request, 'main/contact.html')
+
+
+def REGISTER(request):
+    if request.method=="POST":
+        username= request.POST.get('username')
+        first_name=request.POST.get('first_name')
+        last_name=request.POST.get('last_name')
+        email=request.POST.get('email')
+        pass1=request.POST.get('pass1')
+        pass2=request.POST.get('pass2')
+
+        customer= User.objects.create_user(username,email,pass1)
+        customer.first_name = first_name
+        customer.last_name = last_name
+
+        customer.save()
+        return redirect('register')
+    return render(request,'registration/auth.html')
+
+
+def LOGIN(request):
+    if request.method=="POST":
+        username= request.POST.get('username')
+        password= request.POST.get('password')
+
+        user= authenticate(username=username,password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('home')
+        else:
+            return redirect('login')
+
+
+    return render(request,'registration/auth.html')
+
+
+def LOGOUT(request):
+    logout(request)
+
+
+    return redirect('home')
+
+
+#def CARD(request):
+
+ #   return render(request, 'card/card_detail.html')
+
+
+@login_required(login_url="/login/")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("home")
+
+
+@login_required(login_url="/login/")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.remove(product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/login/")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/login/")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/login/")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/login/")
+def cart_detail(request):
+    return render(request, 'card/card_detail.html')
+
+
+def CHECKOUT(request):
+
+    return render(request,'card/checkout.html')
